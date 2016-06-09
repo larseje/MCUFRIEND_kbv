@@ -8,7 +8,7 @@
 #include "MCUFRIEND_kbv.h"
 #if defined(USE_SERIAL)
  //#include <SPI.h>
-#include "mcufriend_serial.h"
+#include "utility/mcufriend_serial.h"
  //uint8_t running;
 #elif defined(USE_KEIL)
 #include "pin_freedom_8.h"
@@ -16,7 +16,7 @@
 #define WriteCmd(x)  { CD_COMMAND; write16(x); }
 #define WriteData(x) { CD_DATA; write16(x); }
 #else
-#include "mcufriend_shield.h"
+#include "utility/mcufriend_shield.h"
 #endif
 
 #define wait_ms(ms)  delay(ms)
@@ -186,16 +186,16 @@ uint16_t MCUFRIEND_kbv::readID(void)
         return ret;             //0x9488, 9486, 9340, 9341
     if (ret == 0x00D3 || ret == 0xD3D3)
         return ret;             //16-bit write-only bus
-/*
+#if defined(USE_SERIAL)
 	msb = 0x12;                 //read 3rd,4th byte.  does not work in parallel
 	pushCommand(0xD9, &msb, 1);
-	ret2 = readReg(0xD3);
+	ret2 = readReg(0xD3) & 0xFF00;
     msb = 0x13;
 	pushCommand(0xD9, &msb, 1);
-	ret = (ret2 << 8) | readReg(0xD3);
-//	if (ret2 == 0x93)
-    	return ret2;
-*/
+	ret = ret2 | (readReg(0xD3) >> 8);
+	if (ret2 == 0x9300)
+    	return ret;
+#endif
 	return readReg(0);          //0154, 7783, 9320, 9325, 9335, B505, B509
 }
 
@@ -1754,6 +1754,7 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             TFTLCD_DELAY8, 125,
             0x11, 0,            //Sleep Out
             TFTLCD_DELAY8, 20,
+
             0xB0, 1, 0x00,              // unlocks E0, F0
             0xB3, 4, 0x02, 0x00, 0x00, 0x00, //Frame Memory, interface [02 00 00 00]
 			0xB4, 1, 0x00,              // Frame mode [00]
@@ -1765,6 +1766,35 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
 			0xC5, 1, 0x03,      //Frame Rate [03]
             0xC8, 12, 0x00, 0x32, 0x36, 0x45, 0x06, 0x16, 0x37, 0x75, 0x77, 0x54, 0x0C, 0x00,
             0x36, 1, 0x0A,      //Memory Access [00]
+
+            0x3A, 1, 0x55,      //Interlace Pixel Format [XX]
+            0x11, 0,            //Sleep Out
+            TFTLCD_DELAY8, 120,
+            0x29, 0,            //Display On
+            TFTLCD_DELAY8, 25,
+        };
+        static const uint8_t ILI9481_Aurora_regValues[] PROGMEM = {    // Code Aurora black screen
+            0x01, 0,            //Soft Reset
+            TFTLCD_DELAY8, 125,
+            0x11, 0,            //Sleep Out
+            TFTLCD_DELAY8, 120,
+			0xD0, 3, 0x07, 0x42, 0x18,  // Set Power [00 43 18] x1.00, x6, x3
+            0xD1, 3, 0x00, 0x14, 0x1B,  // Set VCOM  [00 00 00] x0.72, x1.02
+            0xD2, 2, 0x01, 0x12,        // Set Power for Normal Mode [01 22]
+            0xC0, 5, 0x10, 0x3B, 0x00, 0x02, 0x01,      //Set Panel Driving [10 3B 00 02 11]
+            0xC1, 3, 0x10, 0x10, 0x88,  // Display Timing Normal [10 10 88]
+            0xC2, 3, 0x10, 0x10, 0x88,  // Display Timing Partial [10 10 88]
+            0xC3, 3, 0x10, 0x10, 0x88,  // Display Timing Idle [10 10 88]
+			0xC5, 1, 0x02,      //Frame Rate [03]
+			0xB4, 1, 0x10,              // Frame mode [00]
+			0xC6, 1, 0x1B,      //Interface Control SDA_EN=1, DPL=1, EPL=1 [02]
+            0xC8, 12, 0x00, 0x46, 0x44, 0x50, 0x04, 0x16, 0x33, 0x13, 0x77, 0x05, 0x0F, 0x00,
+            0xE4, 1, 0xA0,      // Internal LSI
+			0xF0, 1, 0x01,
+			0xF3, 2, 0x40, 0x0A,
+			0xF6, 1, 0x80,
+			
+			0x36, 1, 0x0A,      //Memory Access [00]
 
             0x3A, 1, 0x55,      //Interlace Pixel Format [XX]
             0x11, 0,            //Sleep Out
@@ -1853,7 +1883,7 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             0xD2, 2, 0x01, 0x11,        // Set Power for Normal Mode [01 22]
             0xC0, 5, 0x10, 0x3B, 0x00, 0x02, 0x11,      //Set Panel Driving [10 3B 00 02 11]
             0xC5, 1, 0x03,      //Frame Rate [03]
-			0xC6, 1, 0x83, 
+			0xC6, 1, 0x83,      //Interface Control SDA_EN=1, DPL=1, EPL=1 [02]
             0xC8, 12, 0x00, 0x26, 0x21, 0x00, 0x00, 0x1F, 0x65, 0x23, 0x77, 0x00, 0x0F, 0x00,
             0xF0, 1, 0x01,		//?
             0xE4, 1, 0xA0,      //?SETCABC on Himax
@@ -1899,6 +1929,7 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             TFTLCD_DELAY8, 25,
         };
         init_table(ILI9481_regValues, sizeof(ILI9481_regValues));
+//        init_table(ILI9481_Aurora_regValues, sizeof(ILI9481_Aurora_regValues));
 //        init_table(ILI9481_CPT29_regValues, sizeof(ILI9481_CPT29_regValues));
 //        init_table(ILI9481_PVI35_regValues, sizeof(ILI9481_PVI35_regValues));
 //        init_table(ILI9481_AUO317_regValues, sizeof(ILI9481_AUO317_regValues));
