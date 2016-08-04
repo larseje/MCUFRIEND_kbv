@@ -63,7 +63,7 @@ class TFT_HX8357GLUE : public MCUFRIEND_kbv
             MCUFRIEND_kbv::reset();
 			_ID = MCUFRIEND_kbv::readID();
             if (_ID == 0x00D3 || _ID == 0xD3D3)
-			   _ID = 0x9486;
+			   _ID = 0x6814;
             MCUFRIEND_kbv::begin(_ID);
             MCUFRIEND_kbv::setRotation(1);
             _first = true;

@@ -51,7 +51,7 @@ class UTFTGLUE : public MCUFRIEND_kbv
 		 uint16_t ID = MCUFRIEND_kbv::readID();
 		 if (ID == 0) ID = 0x9341;        //DealExtreme with EXTC=0
 //		 if (ID == 0x0089 || ID == 0x8989) ID = 0x1289;
-		 if (ID == 0x00D3 || ID == 0xD3D3) ID = 0x9481;   //write-only controller
+		 if (ID == 0x00D3 || ID == 0xD3D3) ID = 0x6814;   //write-only controller
 //		 if (ID == 0x00D3 || ID == 0xD3D3) ID = 0x9486;   //write-only controller
 //         if (ID == 0x9327 && orientation == LANDSCAPE) orientation = 3;
 		 MCUFRIEND_kbv::begin(ID);
