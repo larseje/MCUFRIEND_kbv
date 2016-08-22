@@ -375,7 +375,7 @@ void MCUFRIEND_kbv::setRotation(uint8_t r)
             _MC = 0x200, _MP = 0x201, _MW = 0x202, _SC = 0x210, _EC = 0x211, _SP = 0x212, _EP = 0x213;
             GS = (val & 0x80) ? (1 << 15) : 0;
 			uint16_t NL;
-			NL = ((HEIGHT / 8) - 1) << 9;
+			NL = 0x6A00;    // force 432 lines ((HEIGHT / 8) - 1) << 9;
             if (_lcd_ID == 0x9326) NL >>= 1;
             WriteCmdData(0x400, GS | NL);
             goto common_SS;
@@ -603,6 +603,10 @@ void MCUFRIEND_kbv::vertScroll(int16_t top, int16_t scrollines, int16_t offset)
 	if (_lcd_ID == 0x9327) bfa += 32;
     if (offset <= -scrollines || offset >= scrollines) offset = 0; //valid scroll
 	vsp = top + offset; // vertical start position
+	if (HEIGHT == 432 && rotation > 1) {
+	    vsp -= 32;
+		vsp %= 432;
+	}
     if (offset < 0)
         vsp += scrollines;          //keep in unsigned range
     sea = top + scrollines - 1;
@@ -1799,7 +1803,7 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
 		 };
         init_table16(ILI9326_CPT28_regValues, sizeof(ILI9326_CPT28_regValues));
         p16 = (int16_t *) & HEIGHT;
-        *p16 = 400;
+        *p16 = 432;             //force 240x432, scroll by -32 in xxx_REV
         p16 = (int16_t *) & WIDTH;
         *p16 = 240;
         break;
@@ -2285,7 +2289,7 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
         };
         init_table16(R61509V_regValues, sizeof(R61509V_regValues));
         p16 = (int16_t *) & HEIGHT;
-        *p16 = 400;
+        *p16 = 432;             //force 240x432, scroll by -32 in xxx_REV
         break;
     }
     _lcd_rev = ((_lcd_capable & REV_SCREEN) != 0);
