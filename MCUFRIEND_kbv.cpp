@@ -369,14 +369,15 @@ void MCUFRIEND_kbv::setRotation(uint8_t r)
             SS = (val & 0x40) ? (1 << 8) : 0;
             WriteCmdData(0x01, GS | SS | 0x0028);       // set Driver Output Control
             goto common_ORG;
-        case 0x7793:
+        case 0x5420:
+		case 0x7793:
         case 0x9326:
 		case 0xB509:
             _MC = 0x200, _MP = 0x201, _MW = 0x202, _SC = 0x210, _EC = 0x211, _SP = 0x212, _EP = 0x213;
             GS = (val & 0x80) ? (1 << 15) : 0;
 			uint16_t NL;
 			NL = 0x6A00;    // force 432 lines ((HEIGHT / 8) - 1) << 9;
-            if (_lcd_ID == 0x9326) NL >>= 1;
+            if (_lcd_ID == 0x9326 || _lcd_ID == 0x5420) NL >>= 1;
             WriteCmdData(0x400, GS | NL);
             goto common_SS;
         default:
@@ -667,7 +668,8 @@ void MCUFRIEND_kbv::vertScroll(int16_t top, int16_t scrollines, int16_t offset)
         WriteCmdData(0x41, vsp);        //VL#
         break;
 #endif
-    case 0x7793:
+    case 0x5420:
+	case 0x7793:
 	case 0x9326:
 	case 0xB509:
         WriteCmdData(0x401, (1 << 1) | _lcd_rev);       //VLE, REV 
@@ -714,7 +716,8 @@ void MCUFRIEND_kbv::invertDisplay(boolean i)
         WriteCmdData(0x01, _lcd_drivOut);
         break;
 #endif
-    case 0x7793:
+    case 0x5420:
+	case 0x7793:
     case 0x9326:
 	case 0xB509:
         WriteCmdData(0x401, (1 << 1) | _lcd_rev);       //.kbv kludge VLE 
@@ -1740,7 +1743,8 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
         };
         init_table16(ILI9325_regValues, sizeof(ILI9325_regValues));
         break;
-    case 0x9326:
+    case 0x5420:
+	case 0x9326:
         _lcd_capable = REV_SCREEN | READ_BGR;
         static const uint16_t ILI9326_CPT28_regValues[] PROGMEM = {
 //************* Start Initial Sequence **********//
