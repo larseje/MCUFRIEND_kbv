@@ -181,6 +181,8 @@ uint16_t MCUFRIEND_kbv::readID(void)
     ret = readReg(0);           //forces a reset() if called before begin()
     if (ret == 0x5408)          //the SPFD5408 fails the 0xD3D3 test.
         return 0x5408;
+    if (ret == 0x5420)          //the SPFD5420 fails the 0xD3D3 test.
+        return 0x5420;
     if (ret == 0x0089 || ret == 0x8989)
         return 0x1289;
     ret = readReg(0x67);        //HX8347-A
