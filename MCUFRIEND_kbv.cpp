@@ -845,13 +845,13 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             0x000c, 0x0000,     //Interface Control: system i/f
             0x0040, 0x0000,     //Scan Line
             0x0041, 0x0000,     //Vertical Scroll Control
-            0x0042, 0x013f,     //Screen 1 End
-            0x0043, 0x0000,     //Screen 1 start
-            0x0044, 0x00ef,     //Screen 2 end
-            0x0045, 0x0000,     //Screen 2 start
-            0x0046, 0xef00,     //Horiz address H=end, L=start
-            0x0047, 0x013f,     //Vert end
-            0x0048, 0x0000,     //Vert start
+//            0x0042, 0x013f,     //Screen 1 End
+//            0x0043, 0x0000,     //Screen 1 start
+//            0x0044, 0x00ef,     //Screen 2 end
+//            0x0045, 0x0000,     //Screen 2 start
+//            0x0046, 0xef00,     //Horiz address H=end, L=start
+//            0x0047, 0x013f,     //Vert end
+//            0x0048, 0x0000,     //Vert start
             0x0007, 0x0014,     //Display Control: SPT=1, REV=1
             0x0007, 0x0016,     //Display Control: SPT=1, REV=1, display on
             0x0007, 0x0017,     //Display Control: SPT=1, REV=1, display on, GON
@@ -906,10 +906,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             0x0007, 0x0013,     /* GRAM Address Set */
             0x0007, 0x0017,     /* Display Control DISPLAY ON */
 
-            0x0036, 0x00EF,
-            0x0037, 0x0000,
-            0x0038, 0x013F,
-            0x0039, 0x0000,
+//            0x0036, 0x00EF,
+//            0x0037, 0x0000,
+//            0x0038, 0x013F,
+//            0x0039, 0x0000,
         };
         init_table16(S6D0154_regValues, sizeof(S6D0154_regValues));
 
@@ -1185,10 +1185,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             0x0039, 0x0000,     // Gamma Control 10
             0x003C, 0x0203,     // Gamma Control 13
             0x003D, 0x0403,     // Gamma Control 14
-            0x0050, 0x0000,     // Window Horizontal RAM Address Start (R50h)
-            0x0051, 240 - 1,    // Window Horizontal RAM Address End (R51h)
-            0x0052, 0X0000,     // Window Vertical RAM Address Start (R52h)
-            0x0053, 320 - 1,    // Window Vertical RAM Address End (R53h)
+//            0x0050, 0x0000,     // Window Horizontal RAM Address Start (R50h)
+//            0x0051, 240 - 1,    // Window Horizontal RAM Address End (R51h)
+//            0x0052, 0X0000,     // Window Vertical RAM Address Start (R52h)
+//            0x0053, 320 - 1,    // Window Vertical RAM Address End (R53h)
             0x0060, 0xA700,     // Driver Output Control (R60h) .kbv was 0xa700
             0x0061, 0x0001,     // Driver Output Control (R61h)
             0x0090, 0X0029,     // Panel Interface Control 1 (R90h)
@@ -1219,8 +1219,8 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             (0xD0), 2, 0xA4, 0xA1,      //PWCTRL1: Power Control 1 [A4 A1]
             (0xE0), 14, 0xD0, 0x00, 0x05, 0x0E, 0x15, 0x0D, 0x37, 0x43, 0x47, 0x09, 0x15, 0x12, 0x16, 0x19,     //PVGAMCTRL: Positive Voltage Gamma control        
             (0xE1), 14, 0xD0, 0x00, 0x05, 0x0D, 0x0C, 0x06, 0x2D, 0x44, 0x40, 0x0E, 0x1C, 0x18, 0x16, 0x19,     //NVGAMCTRL: Negative Voltage Gamma control
-            (0x2A), 4, 0x00, 0x00, 0x00, 0xEF,  //X address set
-            (0x2B), 4, 0x00, 0x00, 0x01, 0x3F,  //Y address set
+//            (0x2A), 4, 0x00, 0x00, 0x00, 0xEF,  //X address set
+//            (0x2B), 4, 0x00, 0x00, 0x01, 0x3F,  //Y address set
             0x29, 0,            //Display On
             TFTLCD_DELAY8, 10,
         };
@@ -1300,10 +1300,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
 
             0x16, 1, 0x18,
             //Set GRAM Area
-            0x02, 2, 0x00, 0x00,        //Column Start
-            0x04, 2, 0x00, 0xEF,        //Column End
-            0x06, 2, 0x00, 0x00,        //Row Start
-            0x08, 2, 0x01, 0x3F,        //Row End
+//            0x02, 2, 0x00, 0x00,        //Column Start
+//            0x04, 2, 0x00, 0xEF,        //Column End
+//            0x06, 2, 0x00, 0x00,        //Row Start
+//            0x08, 2, 0x01, 0x3F,        //Row End
         };
         init_table(HX8347G_2_regValues, sizeof(HX8347G_2_regValues));
         break;
@@ -1350,10 +1350,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             0x01, 1, 0x06,      //Disp Mode: INVON=1, NORON=1 [02]
             0x55, 1, 0x06,      //SM_PANEL=0, SS_PANEL=0, GS_PANEL=1, REV_PANEL=1, BGR_PANEL=0
             //Set GRAM Area
-            0x02, 2, 0x00, 0x00,        //Column Start
-            0x04, 2, 0x00, 0xEF,        //Column End
-            0x06, 2, 0x00, 0x00,        //Row Start
-            0x08, 2, 0x01, 0x8F,        //Row End
+//            0x02, 2, 0x00, 0x00,        //Column Start
+//            0x04, 2, 0x00, 0xEF,        //Column End
+//            0x06, 2, 0x00, 0x00,        //Row Start
+//            0x08, 2, 0x01, 0x8F,        //Row End
         };
         init_table(HX8352A_regValues, sizeof(HX8352A_regValues));
         p16 = (int16_t *) & HEIGHT;
@@ -1368,10 +1368,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             //  VENDOR Gamma for 3.2"
             (0x46), 12, 0xA4, 0x53, 0x00, 0x44, 0x04, 0x67, 0x33, 0x77, 0x12, 0x4C, 0x46, 0x44,
             //240x320 window setting
-            (0x02), 2, 0x00, 0x00,      // Column address start2
-            (0x04), 2, 0x00, 0xEF,      // Column address end2
-            (0x06), 2, 0x00, 0x00,      // Row address start2
-            (0x08), 2, 0x01, 0x3F,      // Row address end2
+//            (0x02), 2, 0x00, 0x00,      // Column address start2
+//            (0x04), 2, 0x00, 0xEF,      // Column address end2
+//            (0x06), 2, 0x00, 0x00,      // Row address start2
+//            (0x08), 2, 0x01, 0x3F,      // Row address end2
             // Display Setting
             (0x01), 1, 0x06,    // IDMON=0, INVON=1, NORON=1, PTLON=0
             (0x16), 1, 0x48,    // MY=0, MX=0, MV=0, ML=1, BGR=0, TEON=0
@@ -1421,10 +1421,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             //  VENDOR Gamma for 2.4"
             (0x46), 12, 0x94, 0x41, 0x00, 0x33, 0x23, 0x45, 0x44, 0x77, 0x12, 0xCC, 0x46, 0x82,
             //240x320 window setting
-            (0x02), 2, 0x00, 0x00,      // Column address start2
-            (0x04), 2, 0x00, 0xEF,      // Column address end2
-            (0x06), 2, 0x00, 0x00,      // Row address start2
-            (0x08), 2, 0x01, 0x3F,      // Row address end2
+//            (0x02), 2, 0x00, 0x00,      // Column address start2
+//            (0x04), 2, 0x00, 0xEF,      // Column address end2
+//            (0x06), 2, 0x00, 0x00,      // Row address start2
+//            (0x08), 2, 0x01, 0x3F,      // Row address end2
             // Display Setting
             (0x01), 1, 0x06,    // IDMON=0, INVON=1, NORON=1, PTLON=0
             (0x16), 1, 0x48,    // MY=0, MX=0, MV=0, ML=1, BGR=0, TEON=0
@@ -1473,10 +1473,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             //  VENDOR Gamma ITDB02 same as CMO32.   Delays are shorter than AN01
             (0x46), 12, 0xA4, 0x53, 0x00, 0x44, 0x04, 0x67, 0x33, 0x77, 0x12, 0x4C, 0x46, 0x44,
             //240x320 window setting
-            (0x02), 2, 0x00, 0x00,      // Column address start2
-            (0x04), 2, 0x00, 0xEF,      // Column address end2
-            (0x06), 2, 0x00, 0x00,      // Row address start2
-            (0x08), 2, 0x01, 0x3F,      // Row address end2
+//            (0x02), 2, 0x00, 0x00,      // Column address start2
+//            (0x04), 2, 0x00, 0xEF,      // Column address end2
+//            (0x06), 2, 0x00, 0x00,      // Row address start2
+//            (0x08), 2, 0x01, 0x3F,      // Row address end2
             // Display Setting
             (0x01), 1, 0x06,    // IDMON=0, INVON=1, NORON=1, PTLON=0
             (0x16), 1, 0xC8,    // MY=0, MX=0, MV=0, ML=1, BGR=0, TEON=0 .itead
@@ -1523,10 +1523,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
         static const uint8_t HX8347A_NHD_regValues[] PROGMEM = {
             //Gamma Setting NHD
             (0x46), 12, 0x94, 0x41, 0x00, 0x33, 0x23, 0x45, 0x44, 0x77, 0x12, 0xCC, 0x46, 0x82,
-            (0x02), 2, 0x00, 0x00,      //COLSTARTH
-            (0x04), 2, 0x00, 0xEF,      //COLENDH
-            (0x06), 2, 0x00, 0x00,      //ROWSTARTH
-            (0x08), 2, 0x01, 0x3F,      //ROWENDH
+//            (0x02), 2, 0x00, 0x00,      //COLSTARTH
+//            (0x04), 2, 0x00, 0xEF,      //COLENDH
+//            (0x06), 2, 0x00, 0x00,      //ROWSTARTH
+//            (0x08), 2, 0x01, 0x3F,      //ROWENDH
             (0x01), 1, 0x06,    //Display Mode [06]
             (0x16), 1, 0xC8,    //MADCTL [00] MY=1, MX=1, BGR=1
 //            (0x70), 1, 0x05,    //Panel [06] 16-bit
@@ -1638,10 +1638,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             0x003C, 0x0704,
             0x003D, 0x0807,
             //-----Set RAM area-----------------------
-            0x0050, 0x0000,
-            0x0051, 0x00EF,
-            0x0052, 0x0000,
-            0x0053, 0x013F,
+//            0x0050, 0x0000,
+//            0x0051, 0x00EF,
+//            0x0052, 0x0000,
+//            0x0053, 0x013F,
             0x0060, 0xA700,     //GS=1
             0x0061, 0x0001,
             0x006A, 0x0000,
@@ -1723,10 +1723,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             0x003D, 0x0808,
 
             //------------------ Set GRAM area ---------------//
-            0x0050, 0x0000,     // Horizontal GRAM Start Address
-            0x0051, 0x00EF,     // Horizontal GRAM End Address
-            0x0052, 0x0000,     // Vertical GRAM Start Address
-            0x0053, 0x013F,     // Vertical GRAM Start Address
+//            0x0050, 0x0000,     // Horizontal GRAM Start Address
+//            0x0051, 0x00EF,     // Horizontal GRAM End Address
+//            0x0052, 0x0000,     // Vertical GRAM Start Address
+//            0x0053, 0x013F,     // Vertical GRAM Start Address
             0x0060, 0x2700,     // Gate Scan Line GS=0 [0xA700] 
             0x0061, 0x0001,     // NDL,VLE, REV .kbv
             0x006A, 0x0000,     // set scrolling line
@@ -1786,11 +1786,11 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
          0x030C, 0x0000,   //
          0x030D, 0x000A,   //
 //------------------ Set GRAM area ---------------//
-         0x0210, 0x0000,     //  Horizontal GRAM Start Address
-         0x0211, 0x00EF,     //  Horizontal GRAM End Address
-         0x0212, 0x0000,     //  Vertical GRAM Start Address
-         0x0213, 0x01AF,     //  Vertical GRAM Start Address
-         0x0400, 0x3100,     //  Gate Scan Line 400 lines
+//         0x0210, 0x0000,     //  Horizontal GRAM Start Address
+//         0x0211, 0x00EF,     //  Horizontal GRAM End Address
+//         0x0212, 0x0000,     //  Vertical GRAM Start Address
+//         0x0213, 0x01AF,     //  Vertical GRAM Start Address
+//         0x0400, 0x3100,     //  Gate Scan Line 400 lines
          0x0401, 0x0001,     //  NDL,VLE, REV
          0x0404, 0x0000,     //  set scrolling line
 //-------------- Partial Display Control ---------//
@@ -1834,9 +1834,9 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             //                     0xB0, 1, 0x03,      //Enable Protect
             0x36, 1, 0x48,      // Memory Access
             0x3A, 1, 0x55,      //Pixel read=565, write=565
-            0x2A, 4, 0x00, 0x00, 0x00, 0xEF,    // wid: 0, 239
-            0x2B, 4, 0x00, 0x00, 0x01, 0x8F,    // ht: 0, 399
-            0x30, 4, 0x00, 0x00, 0x01, 0x8F,    // Partial Area: 0, 399
+//            0x2A, 4, 0x00, 0x00, 0x00, 0xEF,    // wid: 0, 239
+//            0x2B, 4, 0x00, 0x00, 0x01, 0x8F,    // ht: 0, 399
+//            0x30, 4, 0x00, 0x00, 0x01, 0x8F,    // Partial Area: 0, 399
             0x29, 0,            //Display On
         };
         init_table(ILI9327_regValues, sizeof(ILI9327_regValues));
@@ -1976,8 +1976,8 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             0xF0, 1, 0x01,
             0xF3, 2, 0x02, 0x1A,			
             0x36, 1, 0x0A,      //Memory Access [00]
-            0x2A, 4, 0x00, 0x00, 0x01, 0x3F,
-            0x2B, 4, 0x00, 0x00, 0x01, 0xAD,		
+//            0x2A, 4, 0x00, 0x00, 0x01, 0x3F,
+//            0x2B, 4, 0x00, 0x00, 0x01, 0xAD,		
 
             0x3A, 1, 0x55,      //Interlace Pixel Format [XX]
             0x11, 0,            //Sleep Out
@@ -2217,10 +2217,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             //            0x000C, 0x0001,   //RIM=1 [0000]
             0x000D, 0x0000,     // [0000]
             0x000E, 0x0030,     //VEM=3 VCOM equalize [0000]
-            0x0050, 0x0000,     //Display window area setting
-            0x0051, 0x00EF,
-            0x0052, 0x0000,
-            0x0053, 0x013F,
+//            0x0050, 0x0000,     //Display window area setting
+//            0x0051, 0x00EF,
+//            0x0052, 0x0000,
+//            0x0053, 0x013F,
             0x0061, 0x0001,
             0x006A, 0x0000,
             0x0080, 0x0000,
@@ -2276,10 +2276,10 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
             0x0090, 0x8000,
             0x000F, 0x0000,
 
-            0x0210, 0x0000,
-            0x0211, 0x00EF,
-            0x0212, 0x0000,
-            0x0213, 0x018F,     //432=01AF,400=018F
+//            0x0210, 0x0000,
+//            0x0211, 0x00EF,
+//            0x0212, 0x0000,
+//            0x0213, 0x018F,     //432=01AF,400=018F
             0x0500, 0x0000,
             0x0501, 0x0000,
             0x0502, 0x005F,     //???
