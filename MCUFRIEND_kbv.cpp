@@ -205,12 +205,14 @@ uint16_t MCUFRIEND_kbv::readID(void)
     ret = readReg40(0xEF);      //ILI9327: [xx 02 04 93 27 FF] 
     if (ret == 0x9327)
         return 0x9327;
-    ret = readReg32(0x04); 
-    if (ret == 0x8000)          //HX8357-D [xx 00 80 00]
+    ret = readReg32(0x04) >> 8; 
+    if (ret == 0x3880)          //?unknown [xx 38 80 00]
+        return 0x3880;
+    if (ret == 0x0080)          //HX8357-D [xx 00 80 00]
         return 0x8357;
-    if (ret == 0x8552)          //ST7789V: [xx 85 85 52]
+    if (ret == 0x8585)          //ST7789V: [xx 85 85 52]
         return 0x7789;
-    if (ret == 0xAC11)          //?unknown [xx 61 AC 11]
+    if (ret == 0x61AC)          //?unknown [xx 61 AC 11]
         return 0xAC11;
     ret = readReg32(0xD3);      //for ILI9488, 9486, 9340, 9341
     msb = ret >> 8;
@@ -1873,6 +1875,9 @@ void MCUFRIEND_kbv::begin(uint16_t ID)
         p16 = (int16_t *) & WIDTH;
         *p16 = 240;
         break;
+    case 0x3880:
+        _lcd_capable = AUTO_READINC | MIPI_DCS_REV1 | MV_AXIS | INVERT_GS | READ_24BITS; //thanks Dumper
+		goto common_9329;
     case 0xAC11:
         _lcd_capable = AUTO_READINC | MIPI_DCS_REV1 | MV_AXIS | READ_24BITS | REV_SCREEN; //thanks viliam
 		goto common_9329;
